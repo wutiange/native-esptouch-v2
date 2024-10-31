@@ -1,0 +1,6 @@
+<resources>
+  <string name="esptouch2_about_version">EspTouch V2 Version: %s</string>
+  <string name="esptouch2_aes_key_error">AES Key must be null or 16 bytes data</string>
+  <string name="esptouch2_custom_data_error">Custom data can\'t be more than %d bytes</string>
+  <string name="esp_provisioner_not_init_err">EspProvisioner is not initialized. Please call espProvisionerInit before use</string>
+</resources>

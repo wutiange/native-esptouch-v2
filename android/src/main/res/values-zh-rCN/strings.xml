@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="esptouch2_about_version">EspTouch V2 版本: %s</string>
+  <string name="esptouch2_aes_key_error">AES 密钥必须为空或者16字节数据</string>
+  <string name="esptouch2_custom_data_error">自定义数据不能超过%d字节</string>
+  <string name="esp_provisioner_not_init_err">并没有初始化EspProvisioner，使用前请先调用espProvisionerInit</string>
+</resources>
