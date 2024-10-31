@@ -1,15 +1,57 @@
-import { useEffect } from 'react';
-import { StyleSheet, View, Text } from 'react-native';
-import { espProvisionerInit } from '@wutiange/native-esptouch-v2';
+import { useEffect, useState } from 'react';
+import {
+  StyleSheet,
+  View,
+  Text,
+  PermissionsAndroid,
+  type Permission,
+} from 'react-native';
+import { fetch, type NetInfoWifiState } from '@react-native-community/netinfo';
+
+const checkAndRequestPermission = async () => {
+  try {
+    const permissions: Permission[] = [
+      'android.permission.ACCESS_FINE_LOCATION',
+      'android.permission.ACCESS_COARSE_LOCATION',
+    ];
+    if (!permissions[0]) {
+      return;
+    }
+    const isAgree = await PermissionsAndroid.check(permissions[0]);
+    if (isAgree) {
+      return;
+    }
+    const resultObj = await PermissionsAndroid.requestMultiple(permissions);
+    console.log(resultObj, '----resultObj---');
+  } catch (err) {
+    console.warn(err);
+  }
+};
 
 export default function App() {
+  const [wifiInfo, setWifiInfo] = useState<NetInfoWifiState>();
   useEffect(() => {
-    console.log(espProvisionerInit, '----espProvisionerInit---');
+    checkAndRequestPermission().finally(() => {
+      fetch().then((state) => {
+        setWifiInfo(state as NetInfoWifiState);
+      });
+    });
   }, []);
+
+  const wifiArr = [
+    { label: 'SSID', value: wifiInfo?.details?.ssid },
+    { label: 'BSSID', value: wifiInfo?.details?.bssid },
+    { label: 'IP', value: wifiInfo?.details?.ipAddress },
+  ];
 
   return (
     <View style={styles.container}>
-      <Text>Hello World</Text>
+      {wifiArr.map((item) => (
+        <View key={item.label} style={styles.itemBox}>
+          <Text style={styles.label}>{item.label}:</Text>
+          <Text>{item.value}</Text>
+        </View>
+      ))}
     </View>
   );
 }
@@ -17,12 +59,15 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    padding: 20,
+    gap: 8,
   },
-  box: {
-    width: 60,
-    height: 60,
-    marginVertical: 20,
+  itemBox: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  label: {
+    marginRight: 8,
+    color: '#ff5983',
   },
 });
