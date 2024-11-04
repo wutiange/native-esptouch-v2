@@ -1,0 +1,57 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "esp_provisioner_not_init_err" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "EspProvisioner is not initialized. Please call espProvisionerInit before use"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "并没有初始化EspProvisioner，使用前请先调用espProvisionerInit"
+          }
+        }
+      }
+    },
+    "esptouch2_aes_key_error" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "AES Key must be null or 16 bytes data"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "AES 密钥必须为空或者16字节数据"
+          }
+        }
+      }
+    },
+    "esptouch2_custom_data_error" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Custom data can\\'t be more than %d bytes"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "自定义数据不能超过%d字节"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}
