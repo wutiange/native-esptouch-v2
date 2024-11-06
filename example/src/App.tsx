@@ -7,6 +7,10 @@ import {
 } from 'react-native';
 import { fetch, type NetInfoWifiState } from '@react-native-community/netinfo';
 import { TextInput, Button, Text } from 'react-native-paper';
+import {
+  addSyncListener,
+  espProvisionerInit,
+} from '@wutiange/native-esptouch-v2';
 
 const checkAndRequestPermission = async () => {
   try {
@@ -43,6 +47,7 @@ export default function App() {
   const [message, setMessage] = useState('');
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [aesKeyVisible, setAesKeyVisible] = useState(false);
+
   useEffect(() => {
     checkAndRequestPermission()
       .catch(() => {
@@ -57,6 +62,16 @@ export default function App() {
           }
         });
       });
+  }, []);
+
+  useEffect(() => {
+    return addSyncListener((data) => {
+      console.log(data, '----data--SyncListener-');
+    });
+  }, []);
+
+  useEffect(() => {
+    espProvisionerInit();
   }, []);
 
   const wifiArr = [

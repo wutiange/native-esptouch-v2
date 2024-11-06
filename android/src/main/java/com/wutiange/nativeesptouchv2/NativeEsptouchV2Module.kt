@@ -76,15 +76,10 @@ class NativeEsptouchV2Module(reactContext: ReactApplicationContext) :
   }
 
   @ReactMethod
-  fun espProvisionerInit(promise: Promise) {
-    try {
-      mProvisioner = EspProvisioner(reactApplicationContext)
-      val syncListener = SyncListener(mProvisioner!!)
-      mProvisioner!!.startSync(syncListener)
-      promise.resolve("ok")
-    } catch (e: Exception) {
-      promise.reject(e)
-    }
+  fun espProvisionerInit() {
+    mProvisioner = EspProvisioner(reactApplicationContext)
+    val syncListener = SyncListener(mProvisioner!!)
+    mProvisioner!!.startSync(syncListener)
   }
 
   @ReactMethod

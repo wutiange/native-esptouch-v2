@@ -34,20 +34,30 @@ export const addSyncListener = (handle: (data: SyncListenerResult) => void) => {
   return sub.remove;
 };
 
-export async function espProvisionerInit() {
-  return NativeEsptouchV2.espProvisionerInit();
+export function espProvisionerInit() {
+  NativeEsptouchV2.espProvisionerInit();
 }
 
 export function stopSync() {
   NativeEsptouchV2.stopSync();
 }
 
+export function startSyncWithDelegate() {
+  if (Platform.OS === 'ios') {
+    NativeEsptouchV2.startSyncWithDelegate();
+  }
+}
+
 export function close() {
-  NativeEsptouchV2.close();
+  if (Platform.OS === 'android') {
+    NativeEsptouchV2.close();
+  }
 }
 
 export async function getEspTouchVersion() {
-  return NativeEsptouchV2.getEspTouchVersion();
+  if (Platform.OS === 'android') {
+    return NativeEsptouchV2.getEspTouchVersion();
+  }
 }
 
 interface EspProvisioningRequest {
@@ -68,4 +78,10 @@ export function stopProvisioning() {
 
 export async function isProvisioning() {
   return NativeEsptouchV2.isProvisioning();
+}
+
+export async function isSyncing() {
+  if (Platform.OS === 'ios') {
+    return NativeEsptouchV2.isSyncing();
+  }
 }
