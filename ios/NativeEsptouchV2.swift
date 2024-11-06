@@ -25,6 +25,11 @@ class NativeEsptouchV2: RCTEventEmitter, ESPProvisionerDelegate {
             Self.ESP_PROVISIONING_LISTENER_NAME
         ]
     }
+    
+    @objc
+    override static func requiresMainQueueSetup() -> Bool {
+        return true
+    }
 
 
     // 实现协议方法
@@ -115,8 +120,10 @@ class NativeEsptouchV2: RCTEventEmitter, ESPProvisionerDelegate {
 
     @objc
     func espProvisionerInit() {
-      provisioner = ESPProvisioner.share()
-      startSyncWithDelegate()
+        DispatchQueue.main.async {
+            self.provisioner = ESPProvisioner.share()
+            self.startSyncWithDelegate()
+        }
     }
     
 

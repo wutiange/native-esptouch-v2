@@ -11,6 +11,7 @@ import {
   addSyncListener,
   espProvisionerInit,
 } from '@wutiange/native-esptouch-v2';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const checkAndRequestPermission = async () => {
   try {
@@ -85,7 +86,10 @@ export default function App() {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView
+      style={styles.container}
+      edges={['top', 'bottom', 'left', 'right']}
+    >
       {wifiArr.map((item) => (
         <View key={item.label} style={styles.itemBox}>
           <Text style={styles.label}>{item.label}:</Text>
@@ -148,7 +152,7 @@ export default function App() {
       <Button mode="contained" onPress={handleConfirm} style={styles.button}>
         确认
       </Button>
-    </View>
+    </SafeAreaView>
   );
 }
 
