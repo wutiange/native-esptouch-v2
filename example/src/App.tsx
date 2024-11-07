@@ -4,6 +4,7 @@ import {
   View,
   PermissionsAndroid,
   type Permission,
+  Platform,
 } from 'react-native';
 import { fetch, type NetInfoWifiState } from '@react-native-community/netinfo';
 import { TextInput, Button, Text } from 'react-native-paper';
@@ -14,6 +15,9 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 const checkAndRequestPermission = async () => {
+  if (Platform.OS !== 'android') {
+    return;
+  }
   try {
     const permissions: Permission[] = [
       'android.permission.ACCESS_FINE_LOCATION',

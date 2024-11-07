@@ -11,6 +11,7 @@ class NativeEsptouchV2: RCTEventEmitter, ESPProvisionerDelegate {
     static var SYNC_LISTENER_NAME = "SyncListener"
     static var ESP_PROVISIONING_LISTENER_NAME = "EspProvisioningListener"
     
+    @objc(constantsToExport)
     override func constantsToExport() -> [AnyHashable : Any]! {
         return [
             Self.SYNC_LISTENER_NAME: Self.SYNC_LISTENER_NAME,
@@ -26,9 +27,9 @@ class NativeEsptouchV2: RCTEventEmitter, ESPProvisionerDelegate {
         ]
     }
     
-    @objc
+    @objc(requiresMainQueueSetup)
     override static func requiresMainQueueSetup() -> Bool {
-        return true
+        return false
     }
 
 
@@ -118,27 +119,25 @@ class NativeEsptouchV2: RCTEventEmitter, ESPProvisionerDelegate {
         sendEvent(withName: Self.ESP_PROVISIONING_LISTENER_NAME, body: eventBody)
     }
 
-    @objc
+    @objc(espProvisionerInit)
     func espProvisionerInit() {
-        DispatchQueue.main.async {
-            self.provisioner = ESPProvisioner.share()
-            self.startSyncWithDelegate()
-        }
+        self.provisioner = ESPProvisioner.share()
+        self.startSyncWithDelegate()
     }
     
 
-    @objc
+    @objc(stopSync)
     func stopSync() {
         provisioner?.stopSync()
     }
     
-    @objc
+    @objc(startSyncWithDelegate)
     func startSyncWithDelegate() {
         provisioner?.startSync(with: self)
     }
 
     
-    @objc
+    @objc(startProvisioning:resolver:rejecter:)
     func startProvisioning(_ options: NSDictionary,
                           resolver resolve: @escaping RCTPromiseResolveBlock,
                           rejecter reject: @escaping RCTPromiseRejectBlock) {
@@ -210,17 +209,17 @@ class NativeEsptouchV2: RCTEventEmitter, ESPProvisionerDelegate {
 
 
     
-    @objc
+    @objc(stopProvisioning)
     func stopProvisioning() {
         provisioner?.stopProvisioning()
     }
     
-    @objc
+    @objc(isProvisioning:rejecter:)
     func isProvisioning(resolver resolve: @escaping RCTPromiseResolveBlock, rejecter reject: @escaping RCTPromiseRejectBlock) {
         resolve(provisioner?.isProvisioning() ?? false)
     }
     
-    @objc
+    @objc(isSyncing:rejecter:)
     func isSyncing(resolver resolve: @escaping RCTPromiseResolveBlock, rejecter reject: @escaping RCTPromiseRejectBlock) {
         resolve(provisioner?.isSyncing() ?? false)
     }
